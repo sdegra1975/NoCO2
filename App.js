@@ -1,6 +1,16 @@
 import React from "react";
 import {TextInput,Button, View, Text } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
+import * as firebase from 'firebase';
+
+
+
+   const firebaseConfig = {
+    apiKey: "AIzaSyBQcvg-Kj8-XerZLe7S4Ry-zDfBBaDRYd0",
+    authDomain: "noco2-b85e8.firebaseapp.com"
+   };
+   const firebaseApp = firebase.initializeApp(firebaseConfig);
+
 
 class HomeScreen extends React.Component {
   render() {
@@ -12,7 +22,40 @@ class HomeScreen extends React.Component {
   }
 }
 
-class Login extends React.Component {
+
+class Login extends React.Component
+ {
+
+   constructor(props)
+   {
+     super(props)
+
+     this.state=({
+       email:'',
+       pass:''
+     })
+   }
+
+   signupUser = (email,pass) =>
+   {
+     try {
+       if(this.state.pass.length<6)
+       {
+         alert("Please enter stronger password ")
+         return;
+       }
+       firebase.auth().createUserWithEmailAndPassword(email,pass)
+     }
+     catch(error)
+     {
+       console.log(error.toString());
+     }
+   }
+
+   loginUser = (email,pass) =>
+   {
+
+   }
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -20,24 +63,31 @@ class Login extends React.Component {
 
     <View>
     <Text>Username:</Text>
-    <TextInput/>
+    <TextInput
+      onChangeText={(email)=> this.setState({email})}
+    />
     </View>
 
       <View>
       <Text>Password:</Text>
-      <TextInput secureTextEntry={true} style={{color: "black"}}/>
+      <TextInput
+      secureTextEntry={true} style={{color: "black"}}
+      onChangeText={(pass)=> this.setState({pass})}
+      />
       </View>
 
       <View style={{flexDirection:'row'}}>
           <Button
           style={{padding:20}}
-            //onPress={onPressLearnMore}
             title="Login"
             color="#841584"
-
+            onPress={()=> this.loginUser(this.state.email,this.state.pass)}
           />
           <Button
-          //onPress={onPressLearnMore}
+          onPress={() => {
+            Alert.alert('You tapped the button!');
+          }}
+          onPress={()=> this.signupUser(this.state.email,this.state.pass)}
           title="Register"
           color="#841584"
 
@@ -81,11 +131,12 @@ const AppNavigator = createStackNavigator({
   }
 });
 
+
 const styles = {
 
 container:
 {
-  
+
 },
 }
 
