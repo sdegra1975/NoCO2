@@ -13,7 +13,7 @@ publish: &publish
 
     - run:
         name: Login into Expo
-        command: npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+        command: npx expo login -u $gabedev -p $mypassword
 
     - run:
         name: Publish to Expo
