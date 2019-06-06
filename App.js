@@ -36,6 +36,7 @@ class Login extends React.Component
      })
    }
 
+
    signupUser = (email,pass) =>
    {
      try {
@@ -54,7 +55,18 @@ class Login extends React.Component
 
    loginUser = (email,pass) =>
    {
-
+    firebase.auth().signInWithEmailAndPassword(email,pass)
+    try {
+      
+      
+      this.props.navigation.navigate('HomeScreen');
+    }
+    catch(error)
+    {
+      alert("cant login")
+    }
+      
+     
    }
   render() {
     return (
@@ -84,9 +96,7 @@ class Login extends React.Component
             onPress={()=> this.loginUser(this.state.email,this.state.pass)}
           />
           <Button
-          onPress={() => {
-            Alert.alert('You tapped the button!');
-          }}
+         
           onPress={()=> this.signupUser(this.state.email,this.state.pass)}
           title="Register"
           color="#841584"
@@ -128,7 +138,11 @@ class Login extends React.Component
 const AppNavigator = createStackNavigator({
   Login: {
     screen: Login
-  }
+  },
+
+  HomeScreen: {
+    screen: HomeScreen,
+  },
 });
 
 
